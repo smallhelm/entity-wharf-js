@@ -1,0 +1,30 @@
+{
+  "name": "entity-wharf",
+  "version": "0.0.0",
+  "description": "Store data as entity attribute values in memory. Fast queries and manipulation of state.",
+  "author": "smallhelm",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/smallhelm/entity-wharf-js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/smallhelm/entity-wharf-js/issues"
+  },
+  "homepage": "https://github.com/smallhelm/entity-wharf-js",
+  "keywords": [],
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "devDependencies": {
+    "jasmine-node": "^1.14.5",
+    "onchange": "0.0.2",
+    "uglify-js": "^2.4.15"
+  },
+  "scripts": {
+    "start": "onchange 'index*.js' -- npm run build",
+    "build": "npm test && uglifyjs index.js -cm > entity-wharf.min.js",
+    "test": "jasmine-node --color --matchall -m \"test\\.\" ."
+  }
+}
