@@ -78,8 +78,11 @@
 			add: function(data){
 				var id = nextID();
 				e_index[id] = {};
-				set(id, data);
-				return id;
+				if(set(id, data)){
+					return id;
+				}
+				delete e_index[id];
+				return false;
 			},
 			set: set,
 			remove: function(id){
