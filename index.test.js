@@ -40,5 +40,15 @@ describe("entity-warf", function(){
 		expect(db.q()).toEqual([id]);
 	});
 	it("should support queries", function(){
+		var db = Warf();
+		var bob = db.add({name: "bob"});
+		var sue = db.add({name: "sue"});
+		var jim = db.add({name: "jim", age: 40});
+		var not_bob = db.add({show: "bob"});
+
+
+		expect(db.q()).toEqual([bob, sue, jim, not_bob]);
+		expect(db.q({v: ["bob"]})).toEqual([bob, not_bob]);
+		expect(db.q({v: ["bob"], a: ["name"]})).toEqual([bob]);
 	});
 });

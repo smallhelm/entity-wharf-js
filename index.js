@@ -97,9 +97,39 @@
 				return true;
 			},
 
-			q: function(){
-				//TODO queries
-				return keys(e_index);
+			q: function(query){
+				if(!isMap(query)){
+					return keys(e_index);
+				}
+				var e = query.e || [];
+				var a = query.a || [];
+				var v = query.v || [];
+
+				var constraints = [e];
+				a.forEach(function(attr){
+					constraints.push(keys(a_index[attr] || {}));
+				});
+				v.forEach(function(val){
+					constraints.push(keys(v_index[toValIndex(val)] || {}));
+				});
+
+				var n_id_sets = 0;
+				var result = {};
+				constraints.forEach(function(ids){
+					if(ids.length === 0){
+						return;
+					}
+					n_id_sets++;
+					ids.forEach(function(id){
+						if(!has(result,id)){
+							result[id] = 0;
+						}
+						result[id]++;
+					});
+				});
+				return keys(result).filter(function(id){
+					return result[id] === n_id_sets;
+				});
 			}
 		};
 	};
