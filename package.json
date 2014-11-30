@@ -1,6 +1,6 @@
 {
   "name": "entity-wharf",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Store data as entity attribute values in memory. Fast queries and manipulation of state.",
   "author": "smallhelm",
   "license": "MIT",
@@ -12,7 +12,16 @@
     "url": "https://github.com/smallhelm/entity-wharf-js/issues"
   },
   "homepage": "https://github.com/smallhelm/entity-wharf-js",
-  "keywords": [],
+  "keywords": [
+    "entity attribute value",
+    "model",
+    "entity",
+    "component entity",
+    "ces",
+    "ecs",
+    "eav",
+    "game"
+  ],
   "main": "index.js",
   "files": [
     "index.js"
