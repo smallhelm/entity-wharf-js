@@ -3,9 +3,9 @@
 Stores your data in an elegant way that will give you great flexibility and leverage. This library is designed to be used as a state management solution for applications that need to be performant for quickly mutating state over many different types of entities with similar characteristics. Applications such as games and simulations. If performance isn't this crucial then check out [DataScript](https://github.com/tonsky/datascript) which provides immutability, versioning, undo/redo, and the powerful datalog query engine.
 
 All data stored in Wharf is organized uniformly as
- * *Entity* - just an id (i.e. 1)
- * *Attribute* - an attribute of the entity (i.e. _name_ or _age_)
- * *Value* - the value of the attribute (i.e. _"bob"_ or _50_)
+ * **Entity** - just an id (i.e. _1_)
+ * **Attribute** - an attribute of the entity (i.e. _name_ or _age_)
+ * **Value** - the value of the attribute (i.e. _"bob"_ or _50_)
 
 For example let's describe some shapes.
 
@@ -13,19 +13,19 @@ entity 1 is a red square
 entity 2 is a blue triangle
 entity 3 is a red circle
 
-|Entity|Attribute|Value|
-|-|-|-|
-|1|color|red|
-|1|width|20|
-|1|height|20|
-|1|n\_edges|4|
-|2|color|blue|
-|2|base|10|
-|2|height|40|
-|2|n\_edges|3|
-|3|color|red|
-|3|radius|20|
-|3|n\_edges|0|
+| Entity | Attribute | Value |
+| ------ | --------- | ----- |
+|      1 | color | red |
+|      1 | width | 20 |
+|      1 | height | 20 |
+|      1 | n\_edges | 4 |
+|      2 | color | blue |
+|      2 | base | 10 |
+|      2 | height | 40 |
+|      2 | n\_edges | 3 |
+|      3 | color | red |
+|      3 | radius | 20 |
+|      3 | n\_edges | 0 |
 
 
 # How to use it
