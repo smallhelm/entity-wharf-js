@@ -1,6 +1,6 @@
 # What it does
 
-Stores your data in an elegant way that will give you great flexibility and leverage. This library is designed to be used as a state management solution for applications that need to be performant for quickly mutating state over many different types of entities with similar characteristics. Applications such as games and simulations. If performance isn't this crucial then check out [DataScript](https://github.com/tonsky/datascript) which provides immutability, versioning, undo/redo, and the powerful datalog query engine.
+Stores your data in an elegant way that will give you great flexibility and leverage. This library is designed to be used as a state management solution for applications that need to be performant for quickly mutating state over many different types of entities with similar characteristics. Applications such as games and simulations. If performance isn't this crucial then check out [DataScript](https://github.com/tonsky/datascript) which provides immutability, versioning, undo/redo, and a powerful datalog query engine.
 
 All data stored in Wharf is organized uniformly as
  * **Entity** - just an id (i.e. _1_)
@@ -64,15 +64,15 @@ All entities where `color == red` returns `[ 2, 3 ]`
 var db = Wharf();//make a new "db" to work with
 
 //create some entities
-var square_id   = db.add({color: "blue", width: 20, height: 20, n\_edges: 4});
-var triangle_id = db.add({color: "red", base: 10, height: 40, n\_edges: 3});
+var square_id   = db.add({color: "blue", width: 20, height: 20, n_edges: 4});// (returns false on failure)
+var triangle_id = db.add({color: "red", base: 10, height: 40, n_edges: 3});
 var circle_id   = db.add({color: "blue", radius: 20});
 
 //db.set will add/overwrite attributes and values on an entitiy
-db.set(circle_id, {color: "red", n\_edges: 0});
+db.set(circle_id, {color: "red", n_edges: 0});// -> true (returns false on failure)
 
 //db.get returns the entities data
-db.get(circle_id);// -> {color: "red", radius: 20, n\_edges: 0}
+db.get(circle_id);// -> {color: "red", radius: 20, n_edges: 0} (returns null if it's not found)
 
 //At this point the db has 3 entities the same as in the example
 
