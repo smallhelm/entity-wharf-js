@@ -12,11 +12,18 @@
 
 	var toValIndex = function(v){
 		if(typeof v === 'object'){
+			if(typeof v.length == 'number' && Object.prototype.toString.call(v) == "[object Array]"){
+				return escaper + 'array';
+			}
 			return escaper + 'object';
 		}else if(typeof v === 'function'){
 			return escaper + 'function';
 		}
 		return v;
+	};
+
+	var toAttrValIndex = function(a, v){
+		return a + escaper + toValIndex(v);
 	};
 
 	var isMap = function(o){
@@ -52,6 +59,7 @@
 		var e_index = {};
 		var a_index = {};
 		var v_index = {};
+		var av_index = {};
 
 		var has_e = function(id){
 			return has(e_index, id);
@@ -67,6 +75,7 @@
 
 				appendToIndex(a_index, attr, id);
 				appendToIndex(v_index, toValIndex(val), id);
+				appendToIndex(av_index, toAttrValIndex(attr, val), id);
 			});
 			return true;
 		};
@@ -92,6 +101,7 @@
 				keys(e_index[id]).forEach(function(attr){
 					removeFromIndex(a_index, attr, id);
 					removeFromIndex(v_index, toValIndex(e_index[id][attr]), id);
+					removeFromIndex(av_index, toAttrValIndex(attr, e_index[id][attr]), id);
 				});
 				delete e_index[id];
 				return true;
@@ -104,6 +114,7 @@
 				var e = query.e || [];
 				var a = query.a || [];
 				var v = query.v || [];
+				var av = query.av || [];
 
 				var constraints = [e];
 				a.forEach(function(attr){
@@ -111,6 +122,11 @@
 				});
 				v.forEach(function(val){
 					constraints.push(keys(v_index[toValIndex(val)] || {}));
+				});
+				av.forEach(function(av){
+					var a = av[0];
+					var v = av[1];
+					constraints.push(keys(av_index[toAttrValIndex(a, v)] || {}));
 				});
 
 				var n_id_sets = 0;

@@ -8,18 +8,17 @@ All data stored in Wharf is organized uniformly as
  * **Value** - the value of the attribute (i.e. _"bob"_ or _50_)
 
 For example let's describe some shapes.
-
-entity 1 is a red square
-entity 2 is a blue triangle
-entity 3 is a red circle
+ * entity 1 is a blue square
+ * entity 2 is a red triangle
+ * entity 3 is a red circle
 
 | Entity | Attribute | Value |
 | ------ | --------- | ----- |
-|      1 | color | red |
+|      1 | color | blue |
 |      1 | width | 20 |
 |      1 | height | 20 |
 |      1 | n\_edges | 4 |
-|      2 | color | blue |
+|      2 | color | red |
 |      2 | base | 10 |
 |      2 | height | 40 |
 |      2 | n\_edges | 3 |
@@ -27,24 +26,92 @@ entity 3 is a red circle
 |      3 | radius | 20 |
 |      3 | n\_edges | 0 |
 
+Although there are 3 distinct types we can perform generic queries that cross types.
+
+All entities that have a `height` attribute returns `[ 1, 2 ]`
+
+| Entity | Attribute | Value |
+| ------ | --------- | ----- |
+|      1 | **height** | 20 |
+|      2 | **height** | 40 |
+
+All entities that have a `height` and a `width` attribute returns `[ 1 ]`
+
+| Entity | Attribute | Value |
+| ------ | --------- | ----- |
+|      1 | **width** | 20 |
+|      1 | **height** | 20 |
+
+All entities with a value `20` returns `[ 1, 3 ]`
+
+| Entity | Attribute | Value |
+| ------ | --------- | ----- |
+|      1 | width | **20** |
+|      1 | height | **20** |
+|      3 | radius | **20** |
+
+All entities where `color == red` returns `[ 2, 3 ]`
+
+| Entity | Attribute | Value |
+| ------ | --------- | ----- |
+|      2 | **color** | **red** |
+|      3 | **color** | **red** |
+
 
 # How to use it
 
 ```js
-var db = Wharf();
-//TODO
+var db = Wharf();//make a new "db" to work with
+
+//create some entities
+var square_id   = db.add({color: "blue", width: 20, height: 20, n\_edges: 4});
+var triangle_id = db.add({color: "red", base: 10, height: 40, n\_edges: 3});
+var circle_id   = db.add({color: "blue", radius: 20});
+
+//db.set will add/overwrite attributes and values on an entitiy
+db.set(circle_id, {color: "red", n\_edges: 0});
+
+//db.get returns the entities data
+db.get(circle_id);// -> {color: "red", radius: 20, n\_edges: 0}
+
+//At this point the db has 3 entities the same as in the example
+
+//All entities that have a `height` attribute
+db.q({a: ["height"]});// -> [ square_id, triangle_id ]
+
+//All entities that have a `height` and a `width` attribute
+db.q({a: ["height", "width"]});// -> [ square_id ]
+
+//All entities with a value `20`
+db.q({v: [20]});// -> [ square_id, circle_id ]
+
+//All entities where `color == red`
+db.q({av: [["color", "red"]]});// -> [ triangle_id, circle_id ]
+
+//entities are easy to remove
+db.remove(square_id);// -> true
+
+//if an ID doesn't exist it returns false
+db.remove(square_id);// -> false
 ```
+
+# Installing
 
 There are 3 ways to include this library
 
-## With browserify
+### With browserify
 
+```sh
+$ npm install --save entity-wharf
+```
+
+Then use it
 ```js
 var Wharf = require('entity-wharf');
 ...
 ```
 
-## With a script tag
+### With a script tag
 
 Download [this](https://github.com/smallhelm/entity-wharf/blob/master/entity-wharf.min.js) script then include it in your html
 ```html
@@ -57,7 +124,7 @@ var Wharf = ENTITY_WHARF;
 ...
 ```
 
-## With RequireJS
+### With RequireJS
 
 ```js
 require(['entity-wharf'], function(Wharf) {

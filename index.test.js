@@ -44,11 +44,29 @@ describe("entity-warf", function(){
 		var bob = db.add({name: "bob"});
 		var sue = db.add({name: "sue"});
 		var jim = db.add({name: "jim", age: 40});
-		var not_bob = db.add({show: "bob"});
+		var joe = db.add({name: "joe", boss: "bob"});
+		var no_name = db.add({boss: "bob"});
 
+		expect(db.q()).toEqual([bob, sue, jim, joe, no_name]);
+		expect(db.q({a: ["name"]})).toEqual([bob, sue, jim, joe]);
+		expect(db.q({v: ["bob"]})).toEqual([bob, joe, no_name]);
+		expect(db.q({v: ["bob"], a: ["name"]})).toEqual([bob, joe]);
+		expect(db.q({av: [["name", "bob"]]})).toEqual([bob]);
+		expect(db.q({av: [["boss", "bob"]]})).toEqual([joe, no_name]);
+		expect(db.q({a: ["name"], av: [["boss", "bob"]]})).toEqual([joe]);
+		expect(db.q({e: [bob, jim, no_name], a: ["name"]})).toEqual([bob, jim]);
+	});
+	it("should just index types for functions, objects and arrays", function(){
+		var db = Warf();
+		var e1 = db.add({fn: function(){}});
+		var e2 = db.add({obj: {a: 1, b: 2}});
+		var e3 = db.add({arr: ["something"]});
 
-		expect(db.q()).toEqual([bob, sue, jim, not_bob]);
-		expect(db.q({v: ["bob"]})).toEqual([bob, not_bob]);
-		expect(db.q({v: ["bob"], a: ["name"]})).toEqual([bob]);
+		expect(db.q({v: [parseInt]})).toEqual([e1]);
+		expect(db.q({av: [["fn", Math.min]]})).toEqual([e1]);
+		expect(db.q({v: [{some: "other"}]})).toEqual([e2]);
+		expect(db.q({av: [["obj", db]]})).toEqual([e2]);
+		expect(db.q({v: [[1, 2, 3]]})).toEqual([e3]);
+		expect(db.q({av: [["arr", []]]})).toEqual([e3]);
 	});
 });
