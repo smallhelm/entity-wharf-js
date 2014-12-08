@@ -126,6 +126,7 @@ var Wharf = ENTITY_WHARF;
 
 ### With RequireJS
 
+Download and use [this minified script](https://github.com/smallhelm/entity-wharf/blob/master/entity-wharf.min.js) then require it
 ```js
 require(['entity-wharf'], function(Wharf) {
 	...

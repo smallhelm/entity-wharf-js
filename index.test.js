@@ -61,6 +61,9 @@ describe("entity-warf", function(){
 		var e1 = db.add({fn: function(){}});
 		var e2 = db.add({obj: {a: 1, b: 2}});
 		var e3 = db.add({arr: ["something"]});
+		var e4 = db.add({nnn: null});
+		var e5 = db.add({nnn: undefined});
+		var e6 = db.add({nnn: NaN});
 
 		expect(db.q({v: [parseInt]})).toEqual([e1]);
 		expect(db.q({av: [["fn", Math.min]]})).toEqual([e1]);
@@ -68,5 +71,8 @@ describe("entity-warf", function(){
 		expect(db.q({av: [["obj", db]]})).toEqual([e2]);
 		expect(db.q({v: [[1, 2, 3]]})).toEqual([e3]);
 		expect(db.q({av: [["arr", []]]})).toEqual([e3]);
+		expect(db.q({av: [["nnn", null]]})).toEqual([e4]);
+		expect(db.q({av: [["nnn", undefined]]})).toEqual([e5]);
+		expect(db.q({av: [["nnn", NaN]]})).toEqual([e6]);
 	});
 });

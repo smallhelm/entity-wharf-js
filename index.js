@@ -11,7 +11,7 @@
 	var escaper = "$:?:$";
 
 	var toValIndex = function(v){
-		if(typeof v === 'object'){
+		if(typeof v === 'object' && v !== null){
 			if(typeof v.length == 'number' && Object.prototype.toString.call(v) == "[object Array]"){
 				return escaper + 'array';
 			}

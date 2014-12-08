@@ -1,6 +1,6 @@
 {
   "name": "entity-wharf",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Store data as entity attribute values in memory. Fast queries and manipulation of state.",
   "author": "smallhelm",
   "license": "MIT",
